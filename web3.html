@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইউরোপ মহাদেশ - সভ্যতা, সংস্কৃতি ও অবকাঠামোর সম্মিলন</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --europe-blue: #003399;
+            --europe-yellow: #FFCC00;
+            --europe-red: #CC3333;
+            --europe-green: #339933;
+            --europe-purple: #663399;
+            --europe-gold: #D4AF37;
+            --europe-silver: #C0C0C0;
+            --europe-bronze: #CD7F32;
+            --royal-blue: #4169E1;
+            --royal-purple: #9370DB;
+            --ivory: #FFFFF0;
+            --marble: #F5F5F5;
+            --velvet: #800080;
+            --champagne: #F7E7CE;
+            --crystal: #E6F2FF;
+            --gothic-black: #2C2C2C;
+            --renaissance-gold: #FFD700;
+            --baroque-red: #8B0000;
+            --art-nouveau-green: #2E8B57;
+            --modern-gray: #708090;
+            --primary: #1a237e;
+            --dark: #0a0a2a;
+            --light: #f8f9fa;
+            --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --shadow-hard: 0 25px 50px rgba(0, 0, 0, 0.15);
+            --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'Playfair Display', 'Noto Sans Bengali', serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, 
+                #f8f9fa 0%, 
+                #e9ecef 25%, 
+                #dee2e6 50%, 
+                #ced4da 75%, 
+                #adb5bd 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 51, 153, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 204, 0, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(204, 51, 51, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(51, 153, 51, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 90% 40%, rgba(102, 51, 153, 0.03) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* পার্টিকেল ব্যাকগ্রাউন্ড */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* হেডার হিরো সেকশন */
+        .hero-section {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, 
+                    rgba(0, 51, 153, 0.9) 0%, 
+                    rgba(255, 204, 0, 0.7) 50%, 
+                    rgba(204, 51, 51, 0.9) 100%),
+                url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 4rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-hard);
+        }
+
+        .main-title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, 
+                var(--europe-blue) 0%, 
+                var(--europe-yellow) 25%, 
+                var(--europe-red) 50%, 
+                var(--europe-green) 75%, 
+                var(--europe-purple) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+            animation: titleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(0.5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(-0.5deg); }
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--europe-blue),
+                var(--europe-yellow),
+                var(--europe-red));
+            border-radius: 2px;
+            animation: linePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes linePulse {
+            0%, 100% { width: 200px; opacity: 1; }
+            50% { width: 300px; opacity: 0.7; }
+        }
+
+        .hero-tagline {
+            font-size: 1.8rem;
+            color: var(--ivory);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .europe-flag {
+            display: inline-flex;
+            gap: 5px;
+            margin: 2rem 0;
+        }
+
+        .flag-stripe {
+            width: 40px;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .stripe-blue { background: var(--europe-blue); }
+        .stripe-yellow { background: var(--europe-yellow); }
+        .stripe-red { background: var(--europe-red); }
+        .stripe-green { background: var(--europe-green); }
+        .stripe-purple { background: var(--europe-purple); }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease 1s both;
+        }
+
+        .hero-stat {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.15) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            transition: left 0.7s;
+        }
+
+        .hero-stat:hover::before {
+            left: 100%;
+        }
+
+        .hero-stat:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 2px var(--europe-gold);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            background: linear-gradient(45deg, 
+                var(--europe-yellow), 
+                var(--europe-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--ivory);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* নেভিগেশন */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, 
+                rgba(0, 51, 153, 0.95) 0%, 
+                rgba(255, 204, 0, 0.9) 100%);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            border-bottom: 3px solid var(--europe-gold);
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .nav-logo i {
+            color: var(--europe-gold);
+            font-size: 2.8rem;
+            animation: crownSpin 10s linear infinite;
+        }
+
+        @keyframes crownSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .nav-logo span {
+            background: linear-gradient(45deg, 
+                var(--europe-yellow), 
+                var(--europe-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(45deg, 
+                var(--europe-blue), 
+                var(--europe-purple));
+            color: white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* সেকশন কমন স্টাইল */
+        .section {
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            color: var(--europe-blue);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--europe-blue),
+                var(--europe-yellow),
+                var(--europe-red));
+            border-radius: 2px;
+            animation: titleLine 3s ease-in-out infinite;
+        }
+
+        @keyframes titleLine {
+            0%, 100% { transform: scaleX(1); }
+            50% { transform: scaleX(1.1); }
+        }
+
+        /* ইউনিয়ন ইন্ট্রো */
+        .union-intro {
+            background: linear-gradient(135deg, 
+                var(--crystal) 0%, 
+                var(--ivory) 100%);
+            clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
+            margin-top: -5%;
+        }
+
+        .union-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 4rem auto 0;
+        }
+
+        .union-card {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .union-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                var(--europe-blue),
+                var(--europe-yellow),
+                var(--europe-red));
+            z-index: -1;
+            border-radius: 27px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .union-card:hover::before {
+            opacity: 1;
+        }
+
+        .union-card:hover {
+            transform: translateY(-20px);
+            box-shadow: var(--shadow-hard);
+        }
+
+        .union-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            color: var(--europe-blue);
+        }
+
+        .union-card h3 {
+            color: var(--europe-blue);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .union-card p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* ৩ডি ইউরোপ ম্যাপ */
+        .map-section {
+            background: linear-gradient(135deg, 
+                #0a0a2a 0%, 
+                #1a1a4a 100%);
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #europe-3d {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .map-overlay {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 600px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* কান্ট্রিজ গ্যালারি */
+        .countries-gallery {
+            background: linear-gradient(135deg, 
+                var(--marble) 0%, 
+                var(--champagne) 100%);
+            clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+        }
+
+        .swiper {
+            width: 100%;
+            height: 600px;
+            margin-top: 4rem;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .country-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 2rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.5s;
+        }
+
+        .swiper-slide:hover .country-info {
+            transform: translateY(0);
+        }
+
+        /* কালচার টাইমলাইন */
+        .culture-timeline {
+            background: linear-gradient(135deg, 
+                var(--velvet) 0%, 
+                var(--royal-purple) 100%);
+            color: white;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-year {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--europe-gold);
+            min-width: 150px;
+            text-align: right;
+            padding-right: 2rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--europe-gold);
+            flex: 1;
+        }
+
+        /* আর্কিটেকচার সেকশন */
+        .architecture-section {
+            background: linear-gradient(135deg, 
+                var(--gothic-black) 0%, 
+                #444 100%);
+            color: white;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .architecture-card {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+            transition: var(--transition-smooth);
+        }
+
+        .architecture-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .architecture-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .architecture-card:hover .architecture-image {
+            transform: scale(1.1);
+        }
+
+        .arch-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.5s;
+        }
+
+        .architecture-card:hover .arch-overlay {
+            transform: translateY(0);
+        }
+
+        /* ইকোনমি ড্যাশবোর্ড */
+        .economy-dashboard {
+            background: linear-gradient(135deg, 
+                var(--modern-gray) 0%, 
+                #a9a9a9 100%);
+            padding: 6rem 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition-smooth);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hard);
+        }
+
+        /* এডুকেশন সেকশন */
+        .education-section {
+            background: linear-gradient(135deg, 
+                var(--royal-blue) 0%, 
+                #6495ED 100%);
+            color: white;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .university-carousel {
+            margin-top: 4rem;
+        }
+
+        .uni-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ট্রান্সপোর্ট সেকশন */
+        .transport-section {
+            background: linear-gradient(135deg, 
+                var(--art-nouveau-green) 0%, 
+                #3CB371 100%);
+        }
+
+        .transport-icons {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .transport-icon {
+            font-size: 4rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-bounce);
+        }
+
+        .transport-icon:hover {
+            transform: scale(1.2) rotate(15deg);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* আর্ট গ্যালারি */
+        .art-gallery {
+            background: linear-gradient(135deg, 
+                var(--baroque-red) 0%, 
+                #B22222 100%);
+            padding: 6rem 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .art-piece {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .art-piece:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        /* সায়েন্স সেকশন */
+        .science-section {
+            background: linear-gradient(135deg, 
+                #2C3E50 0%, 
+                #4A6572 100%);
+            color: white;
+            clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
+        }
+
+        .science-timeline {
+            max-width: 800px;
+            margin: 4rem auto 0;
+            position: relative;
+        }
+
+        .science-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--europe-yellow);
+            transition: var(--transition-smooth);
+        }
+
+        .science-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ফুটার */
+        .europe-footer {
+            background: linear-gradient(135deg, 
+                var(--europe-blue) 0%, 
+                var(--royal-blue) 100%);
+            padding: 6rem 2rem 2rem;
+            color: white;
+            position: relative;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+            margin-top: -5%;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--europe-gold);
+            position: relative;
+            padding-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                var(--europe-yellow), 
+                var(--europe-gold));
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #e6e6e6;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--europe-yellow);
+            transform: translateX(10px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+
+        /* ইউরোপিয়ান প্যাটার্ন */
+        .europe-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, 
+                    rgba(255, 204, 0, 0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, 
+                    rgba(0, 51, 153, 0.1) 2px, transparent 2px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* স্ক্রলবার */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, 
+                var(--europe-blue), 
+                var(--europe-purple));
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, 
+                var(--europe-yellow), 
+                var(--europe-gold));
+            border-radius: 6px;
+            border: 2px solid var(--europe-blue);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, 
+                var(--europe-gold), 
+                var(--europe-yellow));
+        }
+
+        /* প্রোগ্রেস বার */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, 
+                var(--europe-blue),
+                var(--europe-yellow),
+                var(--europe-red));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* ব্যাক টু টপ */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, 
+                var(--europe-blue), 
+                var(--europe-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 51, 153, 0.3);
+            border: 2px solid var(--europe-gold);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 51, 153, 0.5);
+            background: linear-gradient(45deg, 
+                var(--europe-purple), 
+                var(--europe-blue));
+        }
+
+        /* লোডিং */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                var(--europe-blue), 
+                var(--europe-purple));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--europe-yellow);
+            border-right-color: var(--europe-gold);
+            border-radius: 50%;
+            animation: loadingSpin 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes loadingSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(45deg, 
+                var(--europe-yellow), 
+                var(--europe-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* হাইলাইট */
+        .highlight {
+            background: linear-gradient(120deg, 
+                rgba(255, 204, 0, 0.3) 0%, 
+                rgba(255, 204, 0, 0) 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        /* টুলটিপ */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 300px;
+            background-color: var(--europe-blue);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            padding: 1rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* রেস্পন্সিভ */
+        @media (max-width: 1200px) {
+            .main-title {
+                font-size: 4rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .nav-menu {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content {
+                padding: 2rem;
+            }
+            
+            .swiper {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .union-grid,
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .transport-icons {
+                gap: 1.5rem;
+            }
+            
+            .transport-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ইউরোপিয়ান প্যাটার্ন এনিমেশন */
+        @keyframes patternFloat {
+            0% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-10px) translateX(10px); }
+            50% { transform: translateY(0) translateX(0); }
+            75% { transform: translateY(10px) translateX(-10px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        .floating-pattern {
+            animation: patternFloat 20s ease-in-out infinite;
+        }
+
+        /* গ্লো ইফেক্ট */
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, 
+                var(--europe-blue),
+                var(--europe-yellow),
+                var(--europe-red));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.5s;
+            border-radius: inherit;
+        }
+
+        .glow-effect:hover::after {
+            opacity: 0.3;
+        }
+
+        /* টেক্সট গ্রেডিয়েন্ট */
+        .text-gradient {
+            background: linear-gradient(45deg, 
+                var(--europe-blue),
+                var(--europe-yellow),
+                var(--europe-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* বর্ডার গ্রেডিয়েন্ট */
+        .border-gradient {
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, 
+                            var(--europe-blue),
+                            var(--europe-yellow),
+                            var(--europe-red)) border-box;
+        }
+
+        /* শাইন এফেক্ট */
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            transition: left 0.7s;
+        }
+
+        .shine-effect:hover::before {
+            left: 100%;
+        }
+
+        /* প্যারালাক্স */
+        .parallax-section {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* ফেড ইন */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* জুম ইন */
+        .zoom-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .zoom-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* স্লাইড ইন */
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* রোটেট ইন */
+        .rotate-in {
+            opacity: 0;
+            transform: rotate(-180deg) scale(0.5);
+            transition: all 0.8s ease;
+        }
+
+        .rotate-in.visible {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+
+        /* পপ আপ */
+        .pop-up {
+            opacity: 0;
+            transform: scale(0) rotate(180deg);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .pop-up.visible {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- লোডিং স্ক্রিন -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">ইউরোপ মহাদেশ লোড হচ্ছে...</div>
+    </div>
+
+    <!-- পার্টিকেল ব্যাকগ্রাউন্ড -->
+    <div id="particles-js"></div>
+
+    <!-- ইউরোপিয়ান প্যাটার্ন -->
+    <div class="europe-pattern floating-pattern"></div>
+
+    <!-- প্রোগ্রেস বার -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- ব্যাক টু টপ -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-crown"></i>
+    </div>
+
+    <!-- নেভিগেশন -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-landmark"></i>
+                ইউরোপ<span>এক্সপ্লোরার</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#home" class="nav-link active"><i class="fas fa-home"></i> হোম</a></li>
+                <li class="nav-item"><a href="#union" class="nav-link"><i class="fas fa-star"></i> ইউরোপিয়ান ইউনিয়ন</a></li>
+                <li class="nav-item"><a href="#countries" class="nav-link"><i class="fas fa-flag"></i> দেশসমূহ</a></li>
+                <li class="nav-item"><a href="#culture" class="nav-link"><i class="fas fa-theater-masks"></i> সংস্কৃতি</a></li>
+                <li class="nav-item"><a href="#architecture" class="nav-link"><i class="fas fa-archway"></i> স্থাপত্য</a></li>
+                <li class="nav-item"><a href="#economy" class="nav-link"><i class="fas fa-euro-sign"></i> অর্থনীতি</a></li>
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-globe"></i> হোমে ফিরুন</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- হিরো সেকশন -->
+    <section id="home" class="hero-section">
+        <div class="hero-content border-gradient shine-effect">
+            <h1 class="main-title text-gradient">ইউরোপ মহাদেশ</h1>
+            <div class="europe-flag">
+                <div class="flag-stripe stripe-blue"></div>
+                <div class="flag-stripe stripe-yellow"></div>
+                <div class="flag-stripe stripe-red"></div>
+                <div class="flag-stripe stripe-green"></div>
+                <div class="flag-stripe stripe-purple"></div>
+            </div>
+            <p class="hero-tagline">সভ্যতার ক্রেডল, রেনেসাঁর জন্মস্থান, আধুনিক গণতন্ত্রের স্বপ্নভূমি - যেখানে প্রাচীন ঐতিহ্য ও আধুনিকতার মেলবন্ধন</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat glow-effect">
+                    <span class="stat-number" data-count="44">০</span>
+                    <span class="stat-label">সার্বভৌম দেশ</span>
+                </div>
+                <div class="hero-stat glow-effect">
+                    <span class="stat-number" data-count="746">০</span>
+                    <span class="stat-label">মিলিয়ন জনসংখ্যা</span>
+                </div>
+                <div class="hero-stat glow-effect">
+                    <span class="stat-number" data-count="10.18">০</span>
+                    <span class="stat-label">মিলিয়ন বর্গ কিমি</span>
+                </div>
+                <div class="hero-stat glow-effect">
+                    <span class="stat-number" data-count="24">০</span>
+                    <span class="stat-label">অফিসিয়াল ভাষা</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ইউনিয়ন ইন্ট্রো -->
+    <section id="union" class="union-intro section">
+        <h2 class="section-title">ইউরোপিয়ান ইউনিয়ন</h2>
+        <div class="union-grid">
+            <div class="union-card fade-in">
+                <div class="union-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>শান্তি ও ঐক্যের প্রকল্প</h3>
+                <p>দ্বিতীয় বিশ্বযুদ্ধের পর ইউরোপের দেশগুলোর মধ্যে শান্তি ও স্থিতিশীলতা বজায় রাখার লক্ষ্যে গঠিত হয় ইউরোপিয়ান ইউনিয়ন। আজ এটি ২৭টি সদস্য দেশ নিয়ে গঠিত একটি রাজনৈতিক ও অর্থনৈতিক ইউনিয়ন।</p>
+            </div>
+            
+            <div class="union-card fade-in">
+                <div class="union-icon">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+                <h3>একক মুদ্রা বাজারে</h3>
+                <p>ইউরো জোনে ১৯টি দেশ ইউরো মুদ্রা ব্যবহার করে, যা বিশ্বের দ্বিতীয় সর্বাধিক ব্যবহৃত রিজার্ভ কারেন্সি। ইউরোপিয়ান সিঙ্গেল মার্কেট বিশ্বের বৃহত্তম একক বাজার।</p>
+            </div>
+            
+            <div class="union-card fade-in">
+                <div class="union-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <h3>গণতন্ত্র ও মানবাধিকার</h3>
+                <p>ইউরোপিয়ান ইউনিয়ন মানবাধিকার, গণতন্ত্র ও আইনের শাসনের উপর ভিত্তি করে গড়ে উঠেছে। ইউরোপিয়ান কোর্ট অব জাস্টিস ও ইউরোপিয়ান পার্লামেন্ট এর প্রধান প্রতিষ্ঠান।</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ৩ডি ইউরোপ ম্যাপ -->
+    <section class="map-section section">
+        <div id="europe-3d"></div>
+        <div class="map-overlay border-gradient">
+            <h2>ইউরোপের ভৌগোলিক বৈচিত্র্য</h2>
+            <p>আল্পস পর্বতমালা থেকে স্ক্যান্ডিনেভিয়ান ফিয়র্ড, ভূমধ্যসাগরীয় উপকূল থেকে ইউরাল পর্বত পর্যন্ত বিস্তৃত এই মহাদেশ।</p>
+        </div>
+    </section>
+
+    <!-- কান্ট্রিজ গ্যালারি -->
+    <section id="countries" class="countries-gallery section">
+        <h2 class="section-title">শীর্ষ দেশসমূহ</h2>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <!-- জার্মানি -->
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1544414817-3f4c1b42699f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="country-info">
+                        <h3>জার্মানি</h3>
+                        <p>ইউরোপের বৃহত্তম অর্থনীতি, প্রযুক্তি ও ইঞ্জিনিয়ারিং নেতা</p>
+                    </div>
+                </div>
+                
+                <!-- ফ্রান্স -->
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="country-info">
+                        <h3>ফ্রান্স</h3>
+                        <p>ফ্যাশন, রন্ধনশিল্প ও শিল্পকলার কেন্দ্রস্থল</p>
+                    </div>
+                </div>
+                
+                <!-- যুক্তরাজ্য -->
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="country-info">
+                        <h3>যুক্তরাজ্য</h3>
+                        <p>বিশ্বের ষষ্ঠ বৃহত্তম অর্থনীতি, আর্থিক ও সাংস্কৃতিক কেন্দ্র</p>
+                    </div>
+                </div>
+                
+                <!-- ইতালি -->
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="country-info">
+                        <h3>ইতালি</h3>
+                        <p>রোমান সাম্রাজ্য ও রেনেসাঁর জন্মস্থান, ফ্যাশন ও গাড়ি শিল্প</p>
+                    </div>
+                </div>
+                
+                <!-- স্পেন -->
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="country-info">
+                        <h3>স্পেন</h3>
+                        <p>সমৃদ্ধ সংস্কৃতি, স্থাপত্য ও পর্যটন শিল্প</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </section>
+
+    <!-- কালচার টাইমলাইন -->
+    <section id="culture" class="culture-timeline section">
+        <h2 class="section-title">সাংস্কৃতিক বিবর্তন</h2>
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-year">খ্রিস্টপূর্ব ৮০০</div>
+                <div class="timeline-content">
+                    <h3>প্রাচীন গ্রিস</h3>
+                    <p>গণতন্ত্র, দর্শন, বিজ্ঞান ও শিল্পকলার জন্ম। সক্রেটিস, প্লেটো, অ্যারিস্টটল।</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">২৭ খ্রিস্টপূর্ব</div>
+                <div class="timeline-content">
+                    <h3>রোমান সাম্রাজ্য</h3>
+                    <p>আইন, প্রকৌশল, স্থাপত্য ও প্রশাসনিক ব্যবস্থার বিকাশ। কলোসিয়াম, পান্থিয়ন।</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">১৪শ-১৭শ শতক</div>
+                <div class="timeline-content">
+                    <h3>রেনেসাঁ</h3>
+                    <p>শিল্প, সাহিত্য ও বিজ্ঞানের পুনর্জাগরণ। লিওনার্দো দা ভিঞ্চি, মাইকেলেঞ্জেলো।</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-year">১৮শ শতক</div>
+                <div class="timeline-content">
+                    <h3>জ্ঞানদীপ্তির যুগ</h3>
+                    <p>যুক্তিবাদ, বৈজ্ঞানিক বিপ্লব ও মানবাধিকারের ধারণার বিকাশ।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- আর্কিটেকচার সেকশন -->
+    <section id="architecture" class="architecture-section section">
+        <h2 class="section-title">স্থাপত্যের বিবর্তন</h2>
+        <div class="architecture-grid">
+            <div class="architecture-card">
+                <img src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="গথিক" class="architecture-image">
+                <div class="arch-overlay">
+                    <h3>গথিক স্থাপত্য</h3>
+                    <p>উচ্চতা, আলোকবিন্যাস ও বিশাল জানালার স্থাপত্য</p>
+                </div>
+            </div>
+            
+            <div class="architecture-card">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="বারোক" class="architecture-image">
+                <div class="arch-overlay">
+                    <h3>বারোক স্থাপত্য</h3>
+                    <p>নাটকীয়তা, সমৃদ্ধি ও জটিল অলঙ্করণ</p>
+                </div>
+            </div>
+            
+            <div class="architecture-card">
+                <img src="https://images.unsplash.com/photo-1527030280866-2cbcb42bcb71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="আধুনিক" class="architecture-image">
+                <div class="arch-overlay">
+                    <h3>আধুনিক স্থাপত্য</h3>
+                    <p>কার্যকারিতা, সরলতা ও উদ্ভাবনী নকশা</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ইকোনমি ড্যাশবোর্ড -->
+    <section id="economy" class="economy-dashboard section">
+        <h2 class="section-title">অর্থনৈতিক ড্যাশবোর্ড</h2>
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-industry"></i> শিল্পোৎপাদন</h3>
+                <p>জার্মানির অটোমোবাইল, ফ্রান্সের এরোস্পেস, ইতালির ফ্যাশন শিল্প</p>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-shopping-cart"></i> বাণিজ্য</h3>
+                <p>বিশ্বের ৩৫% বাণিজ্য ইউরোপের, ৪৫% বৈদেশিক বিনিয়োগ</p>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-flask"></i> গবেষণা</h3>
+                <p>বিশ্বের ৩২% বৈজ্ঞানিক প্রকাশনা, ২৫% গবেষণা ব্যয়</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- এডুকেশন সেকশন -->
+    <section class="education-section section">
+        <h2 class="section-title">শিক্ষা ও গবেষণা</h2>
+        <div class="university-carousel owl-carousel owl-theme">
+            <div class="uni-card">
+                <h3>অক্সফোর্ড বিশ্ববিদ্যালয়</h3>
+                <p>ইংল্যান্ড, প্রতিষ্ঠা ১০৯৬, বিশ্বের প্রাচীনতম বিশ্ববিদ্যালয়</p>
+            </div>
+            
+            <div class="uni-card">
+                <h3>কেমব্রিজ বিশ্ববিদ্যালয়</h3>
+                <p>ইংল্যান্ড, প্রতিষ্ঠা ১২০৯, ১২০টি নোবেল পুরস্কার</p>
+            </div>
+            
+            <div class="uni-card">
+                <h3>সরবোন বিশ্ববিদ্যালয়</h3>
+                <p>ফ্রান্স, প্রতিষ্ঠা ১২৫৭, ইউরোপের প্রাচীনতম বিশ্ববিদ্যালয়</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ট্রান্সপোর্ট সেকশন -->
+    <section class="transport-section section">
+        <h2 class="section-title">পরিবহন অবকাঠামো</h2>
+        <div class="transport-icons">
+            <div class="transport-icon">
+                <i class="fas fa-train"></i>
+            </div>
+            <div class="transport-icon">
+                <i class="fas fa-plane"></i>
+            </div>
+            <div class="transport-icon">
+                <i class="fas fa-ship"></i>
+            </div>
+            <div class="transport-icon">
+                <i class="fas fa-subway"></i>
+            </div>
+            <div class="transport-icon">
+                <i class="fas fa-bicycle"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- আর্ট গ্যালারি -->
+    <section class="art-gallery section">
+        <h2 class="section-title">শিল্পকলার ঐতিহ্য</h2>
+        <div class="gallery-grid">
+            <div class="art-piece" style="background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+            <div class="art-piece" style="background-image: url('https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+            <div class="art-piece" style="background-image: url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+            <div class="art-piece" style="background-image: url('https://images.unsplash.com/photo-1578301978018-3005759f48f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+        </div>
+    </section>
+
+    <!-- সায়েন্স সেকশন -->
+    <section class="science-section section">
+        <h2 class="section-title">বৈজ্ঞানিক অবদান</h2>
+        <div class="science-timeline">
+            <div class="science-item">
+                <h3>গ্যালিলিও গ্যালিলি (১৫৬৪-১৬৪২)</h3>
+                <p>টেলিস্কোপের উন্নয়ন, জ্যোতির্বিদ্যা ও পদার্থবিজ্ঞানে বিপ্লব</p>
+            </div>
+            
+            <div class="science-item">
+                <h3>আইজাক নিউটন (১৬৪৩-১৭২৭)</h3>
+                <p>গতি ও মহাকর্ষের সূত্র, ক্যালকুলাসের আবিষ্কার</p>
+            </div>
+            
+            <div class="science-item">
+                <h3>চার্লস ডারউইন (১৮০৯-১৮৮২)</h3>
+                <p>প্রাকৃতিক নির্বাচন ও বিবর্তন তত্ত্ব</p>
+            </div>
+            
+            <div class="science-item">
+                <h3>মেরি কুরি (১৮৬৭-১৯৩৪)</h3>
+                <p>রেডিয়াম ও পোলোনিয়াম আবিষ্কার, প্রথম নোবেল বিজয়ী নারী</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ফুটার -->
+    <footer class="europe-footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>ইউরোপ এক্সপ্লোরার</h3>
+                <p>সভ্যতার ক্রেডল থেকে আধুনিক ইউরোপিয়ান ইউনিয়ন পর্যন্ত - ইউরোপের সমৃদ্ধ ইতিহাস, সংস্কৃতি ও অগ্রগতির কাহিনী।</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>দ্রুত লিংক</h3>
+                <ul class="footer-links">
+                    <li><a href="#home"><i class="fas fa-home"></i> হোম</a></li>
+                    <li><a href="#union"><i class="fas fa-star"></i> ইউরোপিয়ান ইউনিয়ন</a></li>
+                    <li><a href="#countries"><i class="fas fa-flag"></i> দেশসমূহ</a></li>
+                    <li><a href="#culture"><i class="fas fa-theater-masks"></i> সংস্কৃতি</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>অন্যান্য মহাদেশ</h3>
+                <ul class="footer-links">
+                    <li><a href="web1.html"><i class="fas fa-mountain"></i> এশিয়া</a></li>
+                    <li><a href="web2.html"><i class="fas fa-sun"></i> আফ্রিকা</a></li>
+                    <li><a href="web4.html"><i class="fas fa-flag-usa"></i> উত্তর আমেরিকা</a></li>
+                    <li><a href="web5.html"><i class="fas fa-tree"></i> দক্ষিণ আমেরিকা</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>ইউরোপিয়ান সম্পদ</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> ঐতিহাসিক দলিল</a></li>
+                    <li><a href="#"><i class="fas fa-map"></i> ভ্রমণ গাইড</a></li>
+                    <li><a href="#"><i class="fas fa-graduation-cap"></i> শিক্ষা সংস্থান</a></li>
+                    <li><a href="#"><i class="fas fa-newspaper"></i> সংবাদ</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; ২০২৩ ইউরোপ এক্সপ্লোরার | সভ্যতার ক্রেডল | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
+    </footer>
+
+    <!-- স্ক্রিপ্ট -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // পার্টিকেল কনফিগারেশন
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { 
+                    value: ["#003399", "#FFCC00", "#CC3333", "#339933", "#663399"] 
+                },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 2, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 100,
+                    color: "#FFCC00",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        // লোডিং স্ক্রিন
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 1000);
+            }, 2000);
+        });
+        // থ্রি.জেএস ইউরোপ ম্যাপ
+        function initEurope3D() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: true,
+                powerPreference: "high-performance"
+            });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.getElementById('europe-3d').appendChild(renderer.domElement);
+
+            // ইউরোপের আকারে জ্যামিতি
+            const geometry = new THREE.SphereGeometry(3, 64, 64);
+            
+            // ইউরোপিয়ান রঙের টেক্সচার
+            const textureLoader = new THREE.TextureLoader();
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x003399,
+                shininess: 100,
+                specular: 0x444444
+            });
+            
+            const europe = new THREE.Mesh(geometry, material);
+            scene.add(europe);
+
+            // লাইটিং
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+
+            // কন্ট্রোলস
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+
+            camera.position.z = 8;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                europe.rotation.y += 0.001;
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // সোয়াইপার
+        function initSwiper() {
+            const swiper = new Swiper('.swiper', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 20,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                loop: true,
+            });
+        }
+
+        // ওয়েল কারাউসেল
+        function initCarousel() {
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: { items: 1 },
+                    768: { items: 2 },
+                    1024: { items: 3 }
+                }
+            });
+        }
+
+        // কাউন্টার অ্যানিমেশন
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                
+                setTimeout(() => {
+                    updateCounter();
+                }, 1000);
+            });
+        }
+
+        // স্ক্রল ইফেক্টস
+        function initScrollEffects() {
+            // প্রোগ্রেস বার
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            // ব্যাক টু টপ
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                gsap.to(window, {
+                    scrollTo: 0,
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                });
+            });
+
+            // স্মুথ স্ক্রল
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        gsap.to(window, {
+                            scrollTo: {
+                                y: targetElement,
+                                offsetY: 80
+                            },
+                            duration: 1.5,
+                            ease: "power2.inOut"
+                        });
+                    }
+                });
+            });
+
+            // GSAP অ্যানিমেশন
+            gsap.registerPlugin(ScrollTrigger);
+
+            // ফেড ইন অ্যানিমেশন
+            gsap.utils.toArray('.fade-in').forEach(element => {
+                gsap.from(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            });
+
+            // টাইমলাইন অ্যানিমেশন
+            gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none reverse"
+                    },
+                    x: i % 2 === 0 ? -100 : 100,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.2,
+                    ease: "power2.out"
+                });
+            });
+
+            // জুম ইন কার্ডস
+            gsap.utils.toArray('.union-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none reverse"
+                    },
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 1,
+                    delay: i * 0.1,
+                    ease: "back.out(1.7)"
+                });
+            });
+        }
+
+        // চার্ট.জেএস
+        function initCharts() {
+            // অর্থনৈতিক চার্ট
+            const ctx = document.createElement('canvas');
+            document.querySelector('.dashboard-grid').appendChild(ctx);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['জার্মানি', 'যুক্তরাজ্য', 'ফ্রান্স', 'ইতালি', 'স্পেন'],
+                    datasets: [{
+                        label: 'জিডিপি (ট্রিলিয়ন USD)',
+                        data: [4.0, 3.1, 2.7, 2.0, 1.4],
+                        backgroundColor: [
+                            'rgba(0, 51, 153, 0.8)',
+                            'rgba(255, 204, 0, 0.8)',
+                            'rgba(204, 51, 51, 0.8)',
+                            'rgba(51, 153, 51, 0.8)',
+                            'rgba(102, 51, 153, 0.8)'
+                        ],
+                        borderColor: 'white',
+                        borderWidth: 2,
+                        borderRadius: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'শীর্ষ অর্থনীতিসমূহ',
+                            color: '#333',
+                            font: { 
+                                size: 18, 
+                                family: "'Playfair Display', serif",
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            ticks: { 
+                                color: '#666',
+                                font: { 
+                                    family: "'Noto Sans Bengali', sans-serif",
+                                    size: 12
+                                }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { 
+                                color: '#666',
+                                font: { 
+                                    family: "'Noto Sans Bengali', sans-serif",
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // সবকিছু ইনিশিয়ালাইজ
+        document.addEventListener('DOMContentLoaded', function() {
+            initEurope3D();
+            initSwiper();
+            initCarousel();
+            animateCounters();
+            initScrollEffects();
+            initCharts();
+            
+            // GSAP মাস্টার টাইমলাইন
+            const masterTL = gsap.timeline();
+            
+            // হিরো সেকশন অ্যানিমেশন
+            masterTL
+                .from('.main-title', {
+                    y: -100,
+                    opacity: 0,
+                    duration: 1.5,
+                    ease: "power4.out"
+                })
+                .from('.hero-tagline', {
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                }, "-=0.5")
+                .from('.hero-stat', {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "back.out(1.7)"
+                }, "-=0.5");
+        });
+
+        // রেস্পন্সিভ রিসাইজ
+        window.addEventListener('resize', function() {
+            // থ্রি.জেএস রিসাইজ
+            if (typeof THREE !== 'undefined') {
+                const canvas = document.querySelector('#europe-3d canvas');
+                if (canvas) {
+                    const renderer = canvas._renderer;
+                    if (renderer) {
+                        renderer.setSize(window.innerWidth, window.innerHeight);
+                    }
+                }
+            }
+        });
+
+        // পারফরম্যান্স অপ্টিমাইজেশন
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                window.dispatchEvent(new Event('optimizedResize'));
+            }, 250);
+        });
+
+        // লেজি লোডিং
+        const lazyLoad = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    lazyLoad.unobserve(img);
+                }
+            });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            lazyLoad.observe(img);
+        });
+    </script>
+</body>
+</html>

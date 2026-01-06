@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এশিয়া মহাদেশ - বিশালতা ও বৈচিত্র্যের ভূমি</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --secondary: #00acc1;
+            --accent: #ff5722;
+            --accent-light: #ff8a65;
+            --light: #f5f7fa;
+            --dark: #1a1a2e;
+            --asia-red: #d32f2f;
+            --asia-gold: #ffd700;
+            --asia-green: #388e3c;
+            --asia-blue: #1976d2;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f9f9f9 0%, #e8f5e9 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(211, 47, 47, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(56, 142, 60, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* হেডার স্টাইলিং */
+        header {
+            background: linear-gradient(rgba(26, 35, 126, 0.95), rgba(26, 35, 126, 0.98)), 
+                        url('https://images.unsplash.com/photo-1513415564515-763d91423bdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center 30%;
+            background-attachment: fixed;
+            color: white;
+            padding: 4rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease;
+            background: linear-gradient(to right, #ffffff, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, var(--asia-red), var(--asia-gold), var(--asia-green));
+            border-radius: 2px;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+            color: #bbdefb;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .asia-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            display: block;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* নেভিগেশন */
+        nav {
+            background: linear-gradient(to right, var(--asia-red), var(--primary), var(--asia-green));
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--asia-gold);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--asia-gold);
+            font-size: 2rem;
+        }
+
+        .logo span {
+            color: var(--asia-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--asia-gold);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--asia-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .home-btn {
+            background: var(--asia-gold);
+            color: var(--dark);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .home-btn:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* মূল কন্টেন্ট */
+        .container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        /* ইন্ট্রো সেকশন */
+        .intro-section {
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(to right, var(--asia-red), var(--asia-gold), var(--asia-green));
+            border-radius: 3px;
+        }
+
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            padding: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .intro-text {
+            padding-right: 2rem;
+        }
+
+        .intro-text h2 {
+            color: var(--asia-red);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .intro-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .intro-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .intro-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* দেশসমূহ গ্রিড */
+        .countries-section {
+            margin: 6rem 0;
+        }
+
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .country-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .country-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .country-flag {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .country-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .country-info {
+            padding: 1.5rem;
+        }
+
+        .country-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .country-stat {
+            text-align: center;
+            padding: 0.8rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .country-stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--asia-red);
+            display: block;
+        }
+
+        .country-stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* সংস্কৃতি সেকশন */
+        .culture-section {
+            margin: 6rem 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(211, 47, 47, 0.1));
+            border-radius: 20px;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .culture-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .culture-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .culture-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .culture-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--asia-green);
+        }
+
+        .culture-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .culture-icon {
+            font-size: 3.5rem;
+            color: var(--asia-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .culture-item h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* স্থাপত্য সেকশন */
+        .architecture-section {
+            margin: 6rem 0;
+        }
+
+        .architecture-carousel {
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .owl-carousel .item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin: 0 10px;
+        }
+
+        .architecture-image {
+            height: 300px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .architecture-info {
+            padding: 1.5rem;
+        }
+
+        .architecture-info h3 {
+            color: var(--asia-red);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .architecture-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* চার্ট সেকশন */
+        .charts-section {
+            margin: 6rem 0;
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            box-shadow: var(--shadow);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .chart-container {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* ভৌগোলিক তথ্য */
+        .geography-section {
+            margin: 6rem 0;
+        }
+
+        .geography-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .geo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 5px solid var(--asia-blue);
+        }
+
+        .geo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .geo-icon {
+            font-size: 2.5rem;
+            color: var(--asia-blue);
+            margin-bottom: 1rem;
+        }
+
+        .geo-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* টাইমলাইন সেকশন */
+        .timeline-section {
+            margin: 6rem 0;
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 4rem auto 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--asia-red), var(--asia-gold), var(--asia-green));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .timeline-year {
+            position: absolute;
+            top: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--asia-red);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year {
+            right: -80px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -80px;
+        }
+
+        /* অর্থনীতি সেকশন */
+        .economy-section {
+            margin: 6rem 0;
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.1), rgba(56, 142, 60, 0.1));
+            border-radius: 20px;
+            padding: 4rem;
+        }
+
+        .economy-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .economy-stat {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .economy-stat:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .economy-icon {
+            font-size: 2.5rem;
+            color: var(--asia-green);
+            margin-bottom: 1rem;
+        }
+
+        .economy-stat h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* ইন্টারেক্টিভ ম্যাপ */
+        .interactive-section {
+            margin: 6rem 0;
+            background: white;
+            border-radius: 20px;
+            padding: 4rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .asia-map {
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-radius: 15px;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .country-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--asia-red);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .country-dot:hover {
+            transform: scale(1.5);
+            background: var(--asia-gold);
+        }
+
+        .country-tooltip {
+            position: absolute;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 100;
+            min-width: 200px;
+        }
+
+        /* ফুটার */
+        footer {
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            color: white;
+            padding: 5rem 0 2rem;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--asia-red), var(--asia-gold), var(--asia-green));
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--asia-gold);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--asia-red);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--asia-gold);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* রেস্পন্সিভ ডিজাইন */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .intro-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .intro-text {
+                padding-right: 0;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-year,
+            .timeline-item:nth-child(even) .timeline-year {
+                left: 10px;
+                right: auto;
+            }
+            
+            .culture-section,
+            .charts-section,
+            .interactive-section {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countries-grid,
+            .culture-items,
+            .geography-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-item {
+                min-width: 150px;
+                padding: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .asia-map {
+                height: 400px;
+            }
+        }
+
+        /* স্ক্রলবার */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--asia-red), var(--asia-gold));
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--asia-gold), var(--asia-green));
+        }
+
+        /* প্রোগ্রেস বার */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--asia-red), var(--asia-gold), var(--asia-green));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* ব্যাক টু টপ বাটন */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--asia-red), var(--asia-gold));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* হাইলাইট ইফেক্ট */
+        .highlight {
+            background: linear-gradient(120deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0) 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* টুলটিপ */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--asia-blue);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* লোডিং এনিমেশন */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--asia-gold);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* প্রিন্ট স্টাইল */
+        @media print {
+            nav, footer, .back-to-top, .progress-container {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+            
+            header {
+                background: #1a237e !important;
+                color: black !important;
+                padding: 2rem 0 !important;
+            }
+            
+            h1 {
+                color: black !important;
+                -webkit-background-clip: initial !important;
+                background-clip: initial !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- লোডিং স্ক্রিন -->
+    <div class="loading" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">এশিয়া মহাদেশ লোড হচ্ছে...</div>
+    </div>
+
+    <!-- প্রোগ্রেস বার -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- ব্যাক টু টপ বাটন -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- হেডার -->
+    <header>
+        <div class="header-content">
+            <h1>এশিয়া মহাদেশ</h1>
+            <p class="tagline">বিশ্বের বৃহত্তম এবং সবচেয়ে বৈচিত্র্যময় মহাদেশ - যেখানে প্রাচীন সভ্যতা, আধুনিক প্রযুক্তি এবং বৈচিত্র্যময় সংস্কৃতির সম্মিলন</p>
+            
+            <div class="asia-stats">
+                <div class="stat-item">
+                    <span class="stat-number">৪.৬ বিলিয়ন</span>
+                    <span class="stat-label">জনসংখ্যা</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">৪৮</span>
+                    <span class="stat-label">দেশ</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">৪৪.৫৮ মিলিয়ন</span>
+                    <span class="stat-label">বর্গ কিমি</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">৫০০০+</span>
+                    <span class="stat-label">ভাষা</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- নেভিগেশন -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-globe-asia"></i>
+                মহাদেশ<span>এক্সপ্লোরার</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#overview"><i class="fas fa-home"></i> ওভারভিউ</a></li>
+                <li><a href="#countries"><i class="fas fa-flag"></i> দেশসমূহ</a></li>
+                <li><a href="#culture"><i class="fas fa-theater-masks"></i> সংস্কৃতি</a></li>
+                <li><a href="#geography"><i class="fas fa-mountain"></i> ভূগোল</a></li>
+                <li><a href="#history"><i class="fas fa-landmark"></i> ইতিহাস</a></li>
+                <li><a href="#economy"><i class="fas fa-chart-line"></i> অর্থনীতি</a></li>
+                <li><a href="index.html" class="home-btn"><i class="fas fa-home"></i> হোমে ফিরুন</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- মূল কন্টেন্ট -->
+    <main class="container">
+        <!-- ওভারভিউ সেকশন -->
+        <section id="overview" class="intro-section">
+            <h2 class="section-title">এশিয়া সম্পর্কে</h2>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>বিশ্বের সবচেয়ে প্রভাবশালী মহাদেশ</h2>
+                    <p>এশিয়া হল পৃথিবীর বৃহত্তম এবং সবচেয়ে জনবহুল মহাদেশ, যা বিশ্বের প্রায় <span class="highlight">৬০% জনসংখ্যা</span> ধারণ করে। এটি উত্তর গোলার্ধে অবস্থিত এবং এর বিশালতা ও বৈচিত্র্য এটিকে বিশ্বের সবচেয়ে গুরুত্বপূর্ণ মহাদেশে পরিণত করেছে।</p>
+                    <p>এই মহাদেশে অবস্থিত বিশ্বের সর্বোচ্চ পর্বত <span class="tooltip">মাউন্ট এভারেস্ট<span class="tooltiptext">সমুদ্রপৃষ্ঠ থেকে ৮,৮৪৮.৮৬ মিটার উঁচু</span></span>, বৃহত্তম মরুভূমি গোবি, এবং দীর্ঘতম নদীগুলির মধ্যে কিছু (ইয়াংসি, ইয়েলো, গঙ্গা, সিন্ধু) অবস্থিত।</p>
+                    <p>এশিয়া মানব সভ্যতার জন্মস্থান হিসাবে পরিচিত, যেখানে <span class="highlight">মেসোপটেমিয়া, সিন্ধু সভ্যতা, এবং হুয়াংহো নদী সভ্যতা</span> বিকশিত হয়েছিল। এটি বিশ্বের প্রধান ধর্মগুলির (হিন্দুধর্ম, বৌদ্ধধর্ম, জৈনধর্ম, শিখধর্ম, তাওবাদ, কনফুসিয়ানিজম, শিন্তো, ইসলাম, খ্রিস্টধর্ম) জন্মস্থান।</p>
+                </div>
+                <div class="intro-image">
+                    <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="এশিয়ার দৃশ্য">
+                </div>
+            </div>
+        </section>
+
+        <!-- দেশসমূহ সেকশন -->
+        <section id="countries" class="countries-section">
+            <h2 class="section-title">প্রধান দেশসমূহ</h2>
+            <div class="countries-grid">
+                <!-- চীন -->
+                <div class="country-card">
+                    <div class="country-flag" style="background-image: url('https://flagcdn.com/w320/cn.png');">
+                        <div class="country-name">চীন</div>
+                    </div>
+                    <div class="country-info">
+                        <div class="country-stats">
+                            <div class="country-stat">
+                                <span class="country-stat-value">১.৪ বি</span>
+                                <span class="country-stat-label">জনসংখ্যা</span>
+                            </div>
+                            <div class="country-stat">
+                                <span class="country-stat-value">৯.৬ মি</span>
+                                <span class="country-stat-label">আয়তন (ব.কি.মি.)</span>
+                            </div>
+                        </div>
+                        <p>বিশ্বের সর্বাধিক জনবহুল দেশ এবং দ্বিতীয় বৃহত্তম অর্থনীতি।</p>
+                    </div>
+                </div>
+
+                <!-- ভারত -->
+                <div class="country-card">
+                    <div class="country-flag" style="background-image: url('https://flagcdn.com/w320/in.png');">
+                        <div class="country-name">ভারত</div>
+                    </div>
+                    <div class="country-info">
+                        <div class="country-stats">
+                            <div class="country-stat">
+                                <span class="country-stat-value">১.৩ বি</span>
+                                <span class="country-stat-label">জনসংখ্যা</span>
+                            </div>
+                            <div class="country-stat">
+                                <span class="country-stat-value">৩.৩ মি</span>
+                                <span class="country-stat-label">আয়তন (ব.কি.মি.)</span>
+                            </div>
+                        </div>
+                        <p>বিশ্বের বৃহত্তম গণতন্ত্র এবং দ্রুত বর্ধনশীল অর্থনীতি।</p>
+                    </div>
+                </div>
+
+                <!-- জাপান -->
+                <div class="country-card">
+                    <div class="country-flag" style="background-image: url('https://flagcdn.com/w320/jp.png');">
+                        <div class="country-name">জাপান</div>
+                    </div>
+                    <div class="country-info">
+                        <div class="country-stats">
+                            <div class="country-stat">
+                                <span class="country-stat-value">১২৬ মি</span>
+                                <span class="country-stat-label">জনসংখ্যা</span>
+                            </div>
+                            <div class="country-stat">
+                                <span class="country-stat-value">৩৭৭,৯৭৫</span>
+                                <span class="country-stat-label">আয়তন (ব.কি.মি.)</span>
+                            </div>
+                        </div>
+                        <p>প্রযুক্তি ও উদ্ভাবনে বিশ্ব নেতা, তৃতীয় বৃহত্তম অর্থনীতি।</p>
+                    </div>
+                </div>
+
+                <!-- ইন্দোনেশিয়া -->
+                <div class="country-card">
+                    <div class="country-flag" style="background-image: url('https://flagcdn.com/w320/id.png');">
+                        <div class="country-name">ইন্দোনেশিয়া</div>
+                    </div>
+                    <div class="country-info">
+                        <div class="country-stats">
+                            <div class="country-stat">
+                                <span class="country-stat-value">২৭৩ মি</span>
+                                <span class="country-stat-label">জনসংখ্যা</span>
+                            </div>
+                            <div class="country-stat">
+                                <span class="country-stat-value">১.৯ মি</span>
+                                <span class="country-stat-label">আয়তন (ব.কি.মি.)</span>
+                            </div>
+                        </div>
+                        <p>বিশ্বের বৃহত্তম মুসলিম জনসংখ্যা এবং দ্বীপপুঞ্জ দেশ।</p>
+                    </div>
+                </div>
+
+                <!-- বাংলাদেশ -->
+                <div class="country-card">
+                    <div class="country-flag" style="background-image: url('https://flagcdn.com/w320/bd.png');">
+                        <div class="country-name">বাংলাদেশ</div>
+                    </div>
+                    <div class="country-info">
+                        <div class="country-stats">
+                            <div class="country-stat">
+                                <span class="country-stat-value">১৬৫ মি</span>
+                                <span class="country-stat-label">জনসংখ্যা</span>
+                            </div>
+                            <div class="country-stat">
+                                <span class="country-stat-value">১৪৭,৫৭০</span>
+                                <span class="country-stat-label">আয়তন (ব.কি.মি.)</span>
+                            </div>
+                        </div>
+                        <p>বঙ্গোপসাগর তীরবর্তী দক্ষিণ এশিয়ার একটি গুরুত্বপূর্ণ দেশ।</p>
+                    </div>
+                </div>
+
+                <!-- দক্ষিণ কোরিয়া -->
+                <div class="country-card">
+                    <div class="country-flag" style="background-image: url('https://flagcdn.com/w320/kr.png');">
+                        <div class="country-name">দক্ষিণ কোরিয়া</div>
+                    </div>
+                    <div class="country-info">
+                        <div class="country-stats">
+                            <div class="country-stat">
+                                <span class="country-stat-value">৫১ মি</span>
+                                <span class="country-stat-label">জনসংখ্যা</span>
+                            </div>
+                            <div class="country-stat">
+                                <span class="country-stat-value">১০০,৩৬৩</span>
+                                <span class="country-stat-label">আয়তন (ব.কি.মি.)</span>
+                            </div>
+                        </div>
+                        <p>প্রযুক্তি, পপ সংস্কৃতি (K-Pop) এবং উদ্ভাবনে বিশ্ব নেতা।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- সংস্কৃতি সেকশন -->
+        <section id="culture" class="culture-section">
+            <h2 class="section-title">সাংস্কৃতিক বৈচিত্র্য</h2>
+            <div class="culture-content">
+                <div class="culture-items">
+                    <div class="culture-item">
+                        <div class="culture-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>খাদ্য সংস্কৃতি</h3>
+                        <p>বিশ্বের সবচেয়ে বৈচিত্র্যময় খাবার এশিয়ায়। চীনা, ভারতীয়, থাই, জাপানি, কোরীয় খাবারের বৈশ্বিক প্রভাব।</p>
+                    </div>
+                    <div class="culture-item">
+                        <div class="culture-icon">
+                            <i class="fas fa-pray"></i>
+                        </div>
+                        <h3>ধর্মীয় বৈচিত্র্য</h3>
+                        <p>সব প্রধান ধর্মের জন্মস্থান। হিন্দু, বৌদ্ধ, ইসলাম, খ্রিস্টান, শিন্তো, তাওবাদ সহ অসংখ্য বিশ্বাসের সমাহার।</p>
+                    </div>
+                    <div class="culture-item">
+                        <div class="culture-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3>ভাষার সমৃদ্ধি</h3>
+                        <p>৫০০০+ ভাষা এবং অসংখ্য উপভাষা। চীনা, হিন্দি, আরবি, বাংলা, জাপানি, কোরীয় প্রভৃতি প্রধান ভাষা।</p>
+                    </div>
+                    <div class="culture-item">
+                        <div class="culture-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h3>শিল্প ও সঙ্গীত</h3>
+                        <p>প্রাচীন শিল্প থেকে আধুনিক K-Pop পর্যন্ত বিস্তৃত। বলিউড, হলিউডের পর দ্বিতীয় বৃহত্তম চলচ্চিত্র শিল্প।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- স্থাপত্য সেকশন -->
+        <section class="architecture-section">
+            <h2 class="section-title">স্থাপত্য বিস্ময়</h2>
+            <div class="architecture-carousel owl-carousel owl-theme">
+                <div class="item">
+                    <div class="architecture-image" style="background-image: url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="architecture-info">
+                        <h3>তাজমহল</h3>
+                        <p>ভারতের আগ্রায় অবস্থিত বিশ্বের সপ্তাশ্চর্যের অন্যতম, মার্বেল পাথরে নির্মিত সৌধ।</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="architecture-image" style="background-image: url('https://images.unsplash.com/photo-1544984243-ec57ea16fe25?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="architecture-info">
+                        <h3>চীনের মহাপ্রাচীর</h3>
+                        <p>বিশ্বের দীর্ঘতম মানবনির্মিত কাঠামো, দৈর্ঘ্য ২১,১৯৬ কিলোমিটার।</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="architecture-image" style="background-image: url('https://images.unsplash.com/photo-1564507004663-b6dfb3e2ede5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="architecture-info">
+                        <h3>অ্যাংকর ভাট</h3>
+                        <p>কম্বোডিয়ায় অবস্থিত বিশ্বের বৃহত্তম ধর্মীয় স্মৃতিস্তম্ভ।</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="architecture-image" style="background-image: url('https://images.unsplash.com/photo-1582498518204-29a6fb6bb5a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="architecture-info">
+                        <h3>বুরজ খলিফা</h3>
+                        <p>দুবাইয়ে অবস্থিত বিশ্বের সর্বোচ্চ ভবন, উচ্চতা ৮২৮ মিটার।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- চার্ট সেকশন -->
+        <section class="charts-section">
+            <h2 class="section-title">পরিসংখ্যান ও তথ্য</h2>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">জনসংখ্যা বণ্টন (শীর্ষ ১০ দেশ)</h3>
+                    <canvas id="populationChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">অর্থনৈতিক প্রবৃদ্ধি</h3>
+                    <canvas id="economyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ভূগোল সেকশন -->
+        <section id="geography" class="geography-section">
+            <h2 class="section-title">ভৌগোলিক বৈশিষ্ট্য</h2>
+            <div class="geography-grid">
+                <div class="geo-card">
+                    <div class="geo-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>হিমালয় পর্বতমালা</h3>
+                    <p>বিশ্বের সর্বোচ্চ পর্বতশ্রেণী, দশটি সর্বোচ্চ শৃঙ্গের আবাসস্থল।</p>
+                </div>
+                <div class="geo-card">
+                    <div class="geo-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>নদীসমূহ</h3>
+                    <p>ইয়াংসি, গঙ্গা, সিন্ধু, মেকং - বিশ্বের দীর্ঘতম নদীগুলির বেশিরভাগ এশিয়ায়।</p>
+                </div>
+                <div class="geo-card">
+                    <div class="geo-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>বনাঞ্চল</h3>
+                    <p>বিশ্বের ৩০% বনাঞ্চল এশিয়ায়, সাইবেরিয়ান টাইগা থেকে শুরু করে ইন্দোনেশিয়ার রেইনফরেস্ট।</p>
+                </div>
+                <div class="geo-card">
+                    <div class="geo-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>জলবায়ু</h3>
+                    <p>আর্কটিক থেকে ট্রপিক্যাল পর্যন্ত বৈচিত্র্যময় জলবায়ু অঞ্চল।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- টাইমলাইন সেকশন -->
+        <section id="history" class="timeline-section">
+            <h2 class="section-title">ঐতিহাসিক টাইমলাইন</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">খ্রিস্টপূর্ব ৩০০০</span>
+                        <h3>সিন্ধু সভ্যতা</h3>
+                        <p>বিশ্বের প্রাচীনতম নগর সভ্যতাগুলির মধ্যে একটি, বর্তমান পাকিস্তান ও উত্তর-পশ্চিম ভারত অঞ্চলে বিকশিত।</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">খ্রিস্টপূর্ব ২০৭০</span>
+                        <h3>শিয়া রাজবংশ</h3>
+                        <p>চীনের প্রথম রাজবংশ, ব্রোঞ্জ যুগের সভ্যতার বিকাশ ঘটায়।</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">খ্রিস্টপূর্ব ৫৬৩</span>
+                        <h3>গৌতম বুদ্ধের জন্ম</h3>
+                        <p>বৌদ্ধধর্মের প্রতিষ্ঠাতা বুদ্ধের জন্ম, যা সমগ্র এশিয়ায় ছড়িয়ে পড়ে।</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">খ্রিস্টপূর্ব ৩২১</span>
+                        <h3>মৌর্য সাম্রাজ্য</h3>
+                        <p>চন্দ্রগুপ্ত মৌর্য কর্তৃক প্রতিষ্ঠিত, প্রাচীন ভারতের সর্ববৃহৎ সাম্রাজ্য।</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">৭১০</span>
+                        <h3>নারা যুগ</h3>
+                        <p>জাপানের প্রথম স্থায়ী রাজধানী প্রতিষ্ঠা এবং বৌদ্ধধর্মের প্রসার।</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-year">১২০৬</span>
+                        <h3>দিল্লি সুলতানি</h3>
+                        <p>উত্তর ভারতের মুসলিম শাসন প্রতিষ্ঠা, যা ৩২০ বছর স্থায়ী হয়।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- অর্থনীতি সেকশন -->
+        <section id="economy" class="economy-section">
+            <h2 class="section-title">অর্থনৈতিক গুরুত্ব</h2>
+            <div class="economy-stats">
+                <div class="economy-stat">
+                    <div class="economy-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>বিশ্বের কারখানা</h3>
+                    <p>বিশ্বের ৪০% উৎপাদন এশিয়ায় হয়</p>
+                </div>
+                <div class="economy-stat">
+                    <div class="economy-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>দ্রুত বৃদ্ধি</h3>
+                    <p>বিশ্বের দ্রুততম বর্ধনশীল অর্থনীতিসমূহ</p>
+                </div>
+                <div class="economy-stat">
+                    <div class="economy-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>প্রযুক্তি হাব</h3>
+                    <p>সিলিকন ভ্যালির পর দ্বিতীয় বৃহত্তম টেক হাব</p>
+                </div>
+                <div class="economy-stat">
+                    <div class="economy-icon">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <h3>বাণিজ্য কেন্দ্র</h3>
+                    <p>বিশ্বের ৬০% সামুদ্রিক বাণিজ্য এশিয়ার বন্দরগুলির মাধ্যমে</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ইন্টারেক্টিভ ম্যাপ -->
+        <section class="interactive-section">
+            <h2 class="section-title">ইন্টারেক্টিভ এশিয়া ম্যাপ</h2>
+            <p>নিচের ম্যাপে বিভিন্ন দেশের উপর ক্লিক করে তথ্য দেখুন</p>
+            <div class="asia-map" id="asiaMap">
+                <!-- দেশের ডটগুলো JavaScript দিয়ে যোগ হবে -->
+                <div class="country-tooltip" id="countryTooltip"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ফুটার -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>এশিয়া মহাদেশ</h3>
+                <p>বিশ্বের বৃহত্তম এবং সবচেয়ে বৈচিত্র্যময় মহাদেশের সম্পর্কে বিস্তারিত তথ্য। প্রাচীন সভ্যতা থেকে আধুনিক প্রযুক্তি পর্যন্ত এশিয়ার যাত্রা।</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>দ্রুত লিংক</h3>
+                <ul class="footer-links">
+                    <li><a href="#overview"><i class="fas fa-home"></i> ওভারভিউ</a></li>
+                    <li><a href="#countries"><i class="fas fa-flag"></i> দেশসমূহ</a></li>
+                    <li><a href="#culture"><i class="fas fa-theater-masks"></i> সংস্কৃতি</a></li>
+                    <li><a href="#geography"><i class="fas fa-mountain"></i> ভূগোল</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>অন্যান্য মহাদেশ</h3>
+                <ul class="footer-links">
+                    <li><a href="web2.html"><i class="fas fa-sun"></i> আফ্রিকা</a></li>
+                    <li><a href="web3.html"><i class="fas fa-landmark"></i> ইউরোপ</a></li>
+                    <li><a href="web4.html"><i class="fas fa-flag-usa"></i> উত্তর আমেরিকা</a></li>
+                    <li><a href="web5.html"><i class="fas fa-tree"></i> দক্ষিণ আমেরিকা</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>সম্পদ</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> রেফারেন্স</a></li>
+                    <li><a href="#"><i class="fas fa-download"></i> ডাউনলোড</a></li>
+                    <li><a href="#"><i class="fas fa-share-alt"></i> শেয়ার করুন</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> যোগাযোগ</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; ২০২৩ মহাদেশ এক্সপ্লোরার | এশিয়া মহাদেশের সম্পূর্ণ তথ্য | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
+    </footer>
+
+    <script>
+        // পৃষ্ঠা লোড হলে
+        document.addEventListener('DOMContentLoaded', function() {
+            // লোডিং স্ক্রিন লুকান
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 1500);
+
+            // Owl Carousel ইনিশিয়ালাইজ
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 3
+                    }
+                }
+            });
+
+            // চার্ট তৈরি
+            createCharts();
+
+            // ইন্টারেক্টিভ ম্যাপ তৈরি
+            createInteractiveMap();
+
+            // স্ক্রল ইভেন্ট লিসেনার
+            setupScrollEffects();
+
+            // ব্যাক টু টপ বাটন
+            setupBackToTop();
+
+            // টুলটিপস
+            setupTooltips();
+        });
+
+        // চার্ট তৈরি ফাংশন
+        function createCharts() {
+            // জনসংখ্যা চার্ট
+            const populationCtx = document.getElementById('populationChart').getContext('2d');
+            new Chart(populationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['চীন', 'ভারত', 'ইন্দোনেশিয়া', 'পাকিস্তান', 'বাংলাদেশ', 'জাপান', 'ফিলিপাইন', 'ভিয়েতনাম', 'থাইল্যান্ড', 'দক্ষিণ কোরিয়া'],
+                    datasets: [{
+                        label: 'জনসংখ্যা (মিলিয়ন)',
+                        data: [1400, 1380, 273, 220, 165, 126, 109, 97, 70, 51],
+                        backgroundColor: [
+                            '#d32f2f', '#c62828', '#b71c1c', '#ff5722', 
+                            '#ff9800', '#ffd700', '#4caf50', '#2196f3', 
+                            '#3f51b5', '#9c27b0'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 2,
+                        borderRadius: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a237e',
+                                font: {
+                                    size: 14,
+                                    family: "'Noto Sans Bengali', sans-serif"
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            },
+                            ticks: {
+                                color: '#666',
+                                font: {
+                                    family: "'Noto Sans Bengali', sans-serif"
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#666',
+                                font: {
+                                    family: "'Noto Sans Bengali', sans-serif",
+                                    size: 12
+                                },
+                                maxRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+
+            // অর্থনীতি চার্ট
+            const economyCtx = document.getElementById('economyChart').getContext('2d');
+            new Chart(economyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['২০১৫', '২০১৬', '২০১৭', '২০১৮', '২০১৯', '২০২০', '২০২১', '২০২২'],
+                    datasets: [
+                        {
+                            label: 'চীন (ট্রিলিয়ন USD)',
+                            data: [11, 11.2, 12.3, 13.4, 14.3, 14.7, 17.7, 18.1],
+                            borderColor: '#d32f2f',
+                            backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'জাপান (ট্রিলিয়ন USD)',
+                            data: [4.4, 4.9, 4.9, 5.0, 5.1, 5.0, 5.0, 4.9],
+                            borderColor: '#ffd700',
+                            backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'ভারত (ট্রিলিয়ন USD)',
+                            data: [2.1, 2.3, 2.6, 2.7, 2.9, 2.7, 3.1, 3.5],
+                            borderColor: '#388e3c',
+                            backgroundColor: 'rgba(56, 142, 60, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#1a237e',
+                                font: {
+                                    size: 14,
+                                    family: "'Noto Sans Bengali', sans-serif"
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            },
+                            ticks: {
+                                color: '#666',
+                                font: {
+                                    family: "'Noto Sans Bengali', sans-serif"
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            },
+                            ticks: {
+                                color: '#666',
+                                font: {
+                                    family: "'Noto Sans Bengali', sans-serif"
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ইন্টারেক্টিভ ম্যাপ তৈরি
+        function createInteractiveMap() {
+            const map = document.getElementById('asiaMap');
+            const tooltip = document.getElementById('countryTooltip');
+            
+            // দেশের অবস্থান ডেটা
+            const countries = [
+                { name: 'চীন', x: 65, y: 40, info: 'জনসংখ্যা: ১.৪ বিলিয়ন<br>রাজধানী: বেইজিং<br>মুদ্রা: রেনমিনবি' },
+                { name: 'ভারত', x: 52, y: 55, info: 'জনসংখ্যা: ১.৩ বিলিয়ন<br>রাজধানী: নতুন দিল্লি<br>মুদ্রা: রুপি' },
+                { name: 'জাপান', x: 85, y: 35, info: 'জনসংখ্যা: ১২৬ মিলিয়ন<br>রাজধানী: টোকিও<br>মুদ্রা: ইয়েন' },
+                { name: 'ইন্দোনেশিয়া', x: 70, y: 75, info: 'জনসংখ্যা: ২৭৩ মিলিয়ন<br>রাজধানী: জাকার্তা<br>মুদ্রা: রুপিয়াহ' },
+                { name: 'বাংলাদেশ', x: 58, y: 58, info: 'জনসংখ্যা: ১৬৫ মিলিয়ন<br>রাজধানী: ঢাকা<br>মুদ্রা: টাকা' },
+                { name: 'পাকিস্তান', x: 48, y: 50, info: 'জনসংখ্যা: ২২০ মিলিয়ন<br>রাজধানী: ইসলামাবাদ<br>মুদ্রা: রুপি' },
+                { name: 'রাশিয়া', x: 30, y: 30, info: 'জনসংখ্যা: ১৪৬ মিলিয়ন<br>রাজধানী: মস্কো<br>মুদ্রা: রুবেল' },
+                { name: 'দক্ষিণ কোরিয়া', x: 80, y: 38, info: 'জনসংখ্যা: ৫১ মিলিয়ন<br>রাজধানী: সিউল<br>মুদ্রা: ওন' },
+                { name: 'থাইল্যান্ড', x: 65, y: 65, info: 'জনসংখ্যা: ৭০ মিলিয়ন<br>রাজধানী: ব্যাংকক<br>মুদ্রা: বাথ' },
+                { name: 'ভিয়েতনাম', x: 70, y: 60, info: 'জনসংখ্যা: ৯৭ মিলিয়ন<br>রাজধানী: হ্যানয়<br>মুদ্রা: ডং' },
+                { name: 'ফিলিপাইন', x: 75, y: 65, info: 'জনসংখ্যা: ১০৯ মিলিয়ন<br>রাজধানী: ম্যানিলা<br>মুদ্রা: পেসো' },
+                { name: 'মালয়েশিয়া', x: 68, y: 70, info: 'জনসংখ্যা: ৩২ মিলিয়ন<br>রাজধানী: কুয়ালালামপুর<br>মুদ্রা: রিঙ্গিত' },
+                { name: 'সৌদি আরব', x: 45, y: 55, info: 'জনসংখ্যা: ৩৫ মিলিয়ন<br>রাজধানী: রিয়াদ<br>মুদ্রা: রিয়াল' },
+                { name: 'ইরান', x: 40, y: 45, info: 'জনসংখ্যা: ৮৩ মিলিয়ন<br>রাজধানী: তেহরান<br>মুদ্রা: রিয়াল' },
+                { name: 'তুরস্ক', x: 35, y: 40, info: 'জনসংখ্যা: ৮৪ মিলিয়ন<br>রাজধানী: আঙ্কারা<br>মুদ্রা: লিরা' }
+            ];
+
+            // দেশের ডট তৈরি
+            countries.forEach(country => {
+                const dot = document.createElement('div');
+                dot.className = 'country-dot';
+                dot.style.left = `${country.x}%`;
+                dot.style.top = `${country.y}%`;
+                dot.setAttribute('data-name', country.name);
+                dot.setAttribute('data-info', country.info);
+                
+                dot.addEventListener('mouseenter', function(e) {
+                    const rect = map.getBoundingClientRect();
+                    tooltip.innerHTML = `
+                        <h4>${this.getAttribute('data-name')}</h4>
+                        <p>${this.getAttribute('data-info')}</p>
+                    `;
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = `${e.clientX - rect.left + 10}px`;
+                    tooltip.style.top = `${e.clientY - rect.top - 100}px`;
+                    this.style.transform = 'scale(1.5)';
+                    this.style.backgroundColor = '#ffd700';
+                });
+
+                dot.addEventListener('mousemove', function(e) {
+                    const rect = map.getBoundingClientRect();
+                    tooltip.style.left = `${e.clientX - rect.left + 10}px`;
+                    tooltip.style.top = `${e.clientY - rect.top - 100}px`;
+                });
+
+                dot.addEventListener('mouseleave', function() {
+                    tooltip.style.display = 'none';
+                    this.style.transform = 'scale(1)';
+                    this.style.backgroundColor = '#d32f2f';
+                });
+
+                map.appendChild(dot);
+            });
+        }
+
+        // স্ক্রল ইফেক্টস
+        function setupScrollEffects() {
+            // প্রোগ্রেস বার
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            // স্ক্রল অ্যানিমেশন
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // অ্যানিমেট করতে চাই এমন এলিমেন্টগুলো
+            document.querySelectorAll('.country-card, .culture-item, .geo-card, .economy-stat').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        }
+
+        // ব্যাক টু টপ বাটন
+        function setupBackToTop() {
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // টুলটিপস সেটআপ
+        function setupTooltips() {
+            const tooltips = document.querySelectorAll('.tooltip');
+            tooltips.forEach(tooltip => {
+                tooltip.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'help';
+                });
+            });
+        }
+
+        // স্মুথ স্ক্রলিং
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // কাউন্টার অ্যানিমেশন
+        function animateCounter(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.textContent = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // স্ট্যাট কাউন্টার
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const text = stat.textContent;
+            const match = text.match(/(\d+(\.\d+)?)\s*(বি|মি)/);
+            if (match) {
+                const num = parseFloat(match[1]);
+                const unit = match[3];
+                let endValue = num;
+                if (unit === 'বি') endValue *= 1000;
+                
+                stat.textContent = '0';
+                setTimeout(() => {
+                    animateCounter(stat, 0, endValue, 2000);
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

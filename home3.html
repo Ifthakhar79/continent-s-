@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মহাদেশ এক্সপ্লোরার - ৩ডি ঘূর্ণায়মান পৃথিবী</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Three.js লাইব্রেরি -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --secondary: #00acc1;
+            --accent: #ff5722;
+            --light: #f5f7fa;
+            --dark: #1a1a2e;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0c2461 0%, #1a237e 50%, #00acc1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* হেডার স্টাইলিং */
+        header {
+            background: linear-gradient(rgba(10, 25, 47, 0.95), rgba(26, 35, 126, 0.9)), 
+                        url('https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease;
+            background: linear-gradient(to right, #ffffff, #00e5ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+            color: #bbdefb;
+        }
+
+        /* নেভিগেশন */
+        nav {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ঘূর্ণায়মান পৃথিবী কন্টেইনার */
+        .globe-section {
+            height: 75vh;
+            position: relative;
+            margin: 2rem auto 3rem;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 0 100px rgba(0, 172, 193, 0.4), 
+                        inset 0 0 50px rgba(255, 255, 255, 0.1);
+            max-width: 1400px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        #earth-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: grab;
+        }
+
+        .earth-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 172, 193, 0.7);
+        }
+
+        .control-btn.active {
+            background: var(--accent);
+            box-shadow: 0 0 15px rgba(255, 87, 34, 0.7);
+        }
+
+        .earth-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1s ease 1s both;
+            z-index: 100;
+        }
+
+        .earth-info h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .earth-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #bbdefb;
+        }
+
+        .continent-highlight {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+        }
+
+        .continent-highlight h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .continent-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .continent-tag {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continent-tag:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 172, 193, 0.3);
+        }
+
+        .continent-tag.active {
+            background: var(--accent);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        /* লোডিং স্ক্রিন */
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* মূল কন্টেন্ট */
+        .container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .intro h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #e0f7fa;
+        }
+
+        .continent-counter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+
+        .counter-item {
+            text-align: center;
+            margin: 0 1.5rem;
+        }
+
+        .counter-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .counter-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* মহাদেশ কার্ড */
+        .continents-section {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .continents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .continent-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .continent-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .continent-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .continent-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .continent-info {
+            padding: 1.5rem;
+        }
+
+        .continent-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            background-color: var(--light);
+            padding: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .continent-description {
+            margin-bottom: 1.5rem;
+            color: #555;
+            height: 100px;
+            overflow: hidden;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-explore {
+            background-color: var(--accent);
+            margin-top: 0.5rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* বৈশিষ্ট্যসমূহ */
+        .features {
+            margin: 5rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #555;
+        }
+
+        /* মহাদেশ লিংক সেকশন */
+        .continent-links-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 20px;
+        }
+
+        .continent-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .continent-link {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .continent-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .continent-link i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--secondary);
+        }
+
+        .continent-link h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .continent-link p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ফুটার */
+        footer {
+            background: rgba(10, 25, 47, 0.95);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* রেস্পন্সিভ ডিজাইন */
+        @media (max-width: 1200px) {
+            .globe-section {
+                height: 65vh;
+            }
+        }
+
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .globe-section {
+                height: 60vh;
+            }
+            
+            .earth-info, .continent-highlight {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                max-width: 100%;
+                margin: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0 0.5rem;
+            }
+            
+            .counter-number {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .globe-section {
+                height: 50vh;
+            }
+            
+            .earth-controls {
+                bottom: 10px;
+                padding: 10px 15px;
+                gap: 10px;
+            }
+            
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .continents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .continent-links {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .globe-section {
+                height: 40vh;
+                margin: 1rem auto 2rem;
+            }
+            
+            .earth-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
+            }
+        }
+
+        /* কাস্টম স্ক্রলবার */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* স্টার ব্যাকগ্রাউন্ড */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- হেডার সেকশন -->
+    <header>
+        <div class="header-content">
+            <h1>মহাদেশ এক্সপ্লোরার</h1>
+            <p class="tagline">ঘূর্ণায়মান ৩ডি পৃথিবী এবং ৭টি মহাদেশের বিস্ময়কর ভ্রমণ</p>
+        </div>
+        
+        <!-- স্টার ব্যাকগ্রাউন্ড -->
+        <div class="stars" id="stars"></div>
+    </header>
+
+    <!-- নেভিগেশন -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-globe-asia"></i>
+                মহাদেশ এক্সপ্লোরার
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">হোম</a></li>
+                <li><a href="#earth3d">৩ডি পৃথিবী</a></li>
+                <li><a href="#continents">মহাদেশ</a></li>
+                <li><a href="#features">বৈশিষ্ট্য</a></li>
+                <li><a href="#about">আমাদের সম্পর্কে</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- লোডিং স্ক্রিন -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">৩ডি পৃথিবী তৈরি হচ্ছে... মহাদেশগুলো লোড হচ্ছে...</div>
+    </div>
+
+    <!-- ঘূর্ণায়মান পৃথিবী -->
+    <section class="globe-section" id="earth3d">
+        <div id="earth-container"></div>
+        
+        <!-- পৃথিবী সম্পর্কে তথ্য -->
+        <div class="earth-info">
+            <h3><i class="fas fa-globe-asia"></i> আমাদের পৃথিবী</h3>
+            <p>সৌরজগতের তৃতীয় গ্রহ, জীবনের একমাত্র আবাসস্থল।</p>
+            <div class="earth-stats">
+                <div class="stat-item">
+                    <div class="stat-value">৭</div>
+                    <div class="stat-label">মহাদেশ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">৫</div>
+                    <div class="stat-label">মহাসাগর</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">২৯%</div>
+                    <div class="stat-label">স্থলভাগ</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">৭১%</div>
+                    <div class="stat-label">জলভাগ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- মহাদেশ হাইলাইট -->
+        <div class="continent-highlight">
+            <h3><i class="fas fa-map-marked-alt"></i> মহাদেশ নির্বাচন করুন</h3>
+            <p>নিচের তালিকা থেকে কোন মহাদেশের তথ্য দেখতে চান:</p>
+            <div class="continent-list">
+                <div class="continent-tag" data-continent="asia">এশিয়া</div>
+                <div class="continent-tag" data-continent="africa">আফ্রিকা</div>
+                <div class="continent-tag" data-continent="europe">ইউরোপ</div>
+                <div class="continent-tag" data-continent="north-america">উত্তর আমেরিকা</div>
+                <div class="continent-tag" data-continent="south-america">দক্ষিণ আমেরিকা</div>
+                <div class="continent-tag" data-continent="antarctica">অ্যান্টার্কটিকা</div>
+                <div class="continent-tag" data-continent="oceania">ওশেনিয়া</div>
+            </div>
+        </div>
+
+        <!-- কন্ট্রোল প্যানেল -->
+        <div class="earth-controls">
+            <button class="control-btn active" id="rotateBtn" title="ঘূর্ণন সক্রিয় করুন">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <button class="control-btn" id="zoomInBtn" title="জুম ইন করুন">
+                <i class="fas fa-search-plus"></i>
+            </button>
+            <button class="control-btn" id="zoomOutBtn" title="জুম আউট করুন">
+                <i class="fas fa-search-minus"></i>
+            </button>
+            <button class="control-btn" id="resetBtn" title="মূল অবস্থানে ফিরুন">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="control-btn" id="nightBtn" title="রাতের দৃশ্য দেখুন">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- মূল কন্টেন্ট -->
+    <main class="container">
+        <!-- ইন্ট্রোডাকশন -->
+        <section class="intro" id="home">
+            <h2>বিশ্বের মহাদেশসমূহে আপনাকে স্বাগতম</h2>
+            <p>আমাদের পৃথিবী সাতটি অসাধারণ মহাদেশে বিভক্ত, যাদের প্রত্যেকটির রয়েছে নিজস্ব অনন্য ভূগোল, সংস্কৃতি, ইতিহাস এবং প্রাকৃতিক সৌন্দর্য। এই প্ল্যাটফর্মে আপনি প্রতিটি মহাদেশ সম্পর্কে বিস্তারিত জানতে পারবেন এবং তাদের বৈচিত্র্য অনুসন্ধান করতে পারবেন।</p>
+            
+            <div class="continent-counter">
+                <div class="counter-item">
+                    <span class="counter-number">৭</span>
+                    <span class="counter-label">মহাদেশ</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number">১৯৫</span>
+                    <span class="counter-label">দেশ</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number">৭.৯ বিলিয়ন</span>
+                    <span class="counter-label">মানুষ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- মহাদেশ কার্ড -->
+        <section class="continents-section" id="continents">
+            <h2 class="section-title">৭টি মহাদেশ</h2>
+            
+            <div class="continents-grid">
+                <!-- এশিয়া -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1513415564515-763d91423bdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">এশিয়া</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">৪৪.৫৮ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৪.৬ বিলিয়ন</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৪৮</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            পৃথিবীর বৃহত্তম এবং সবচেয়ে জনবহুল মহাদেশ, যা বিশ্বের প্রায় ৬০% মানুষকে ধারণ করে। এশিয়ায় অবস্থিত বিশ্বের সর্বোচ্চ পর্বত মাউন্ট এভারেস্ট এবং বৃহত্তম দেশ রাশিয়া (আংশিক)।
+                        </div>
+                        <a href="web1.html" class="btn btn-explore">এশিয়া আবিষ্কার করুন</a>
+                    </div>
+                </div>
+
+                <!-- আফ্রিকা -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">আফ্রিকা</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">৩০.৩৭ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">১.৩ বিলিয়ন</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৫৪</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            পৃথিবীর দ্বিতীয় বৃহত্তম মহাদেশ যা মানব সভ্যতার জন্মস্থান। আফ্রিকা তার বন্যপ্রাণী, প্রাকৃতিক সম্পদ এবং সাংস্কৃতিক বৈচিত্র্যের জন্য বিখ্যাত। সাহারা মরুভূমি বিশ্বের বৃহত্তম গরম মরুভূমি।
+                        </div>
+                        <a href="web2.html" class="btn btn-explore">আফ্রিকা আবিষ্কার করুন</a>
+                    </div>
+                </div>
+
+                <!-- ইউরোপ -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">ইউরোপ</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">১০.১৮ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৭৪৬ মিলিয়ন</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৪৪</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            ঐতিহাসিক, সাংস্কৃতিক এবং অর্থনৈতিক দিক থেকে অত্যন্ত গুরুত্বপূর্ণ মহাদেশ। ইউরোপে রেনেসাঁ, শিল্প বিপ্লব এবং আধুনিক গণতন্ত্রের জন্ম হয়েছে। এর বৈচিত্র্যময় সংস্কৃতি এবং স্থাপত্য বিশ্ববিখ্যাত।
+                        </div>
+                        <a href="web3.html" class="btn btn-explore">ইউরোপ আবিষ্কার করুন</a>
+                    </div>
+                </div>
+
+                <!-- উত্তর আমেরিকা -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">উত্তর আমেরিকা</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">২৪.৭১ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৫৯২ মিলিয়ন</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">২৩</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            পৃথিবীর তৃতীয় বৃহত্তম মহাদেশ যেখানে বিশ্বের বৃহত্তম অর্থনীতি যুক্তরাষ্ট্র এবং প্রাকৃতিক সৌন্দর্যে ভরপুর কানাডা অবস্থিত। এর মধ্যে রয়েছে গ্র্যান্ড ক্যানিয়ন, নায়াগ্রা ফলসের মতো প্রাকৃতিক বিস্ময়।
+                        </div>
+                        <a href="web4.html" class="btn btn-explore">উত্তর আমেরিকা আবিষ্কার করুন</a>
+                    </div>
+                </div>
+
+                <!-- দক্ষিণ আমেরিকা -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">দক্ষিণ আমেরিকা</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">১৭.৮৪ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৪৩৪ মিলিয়ন</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">১২</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            আমাজন রেনফরেস্ট, আন্দেজ পর্বতমালা এবং বিশ্বের বৃহত্তম নদী আমাজন নদীর জন্য বিখ্যাত। দক্ষিণ আমেরিকা তার জীববৈচিত্র্য, প্রাচীন সভ্যতা এবং সমৃদ্ধ সংস্কৃতির জন্য পরিচিত।
+                        </div>
+                        <a href="web5.html" class="btn btn-explore">দক্ষিণ আমেরিকা আবিষ্কার করুন</a>
+                    </div>
+                </div>
+
+                <!-- অ্যান্টার্কটিকা -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1514560492-58e1b23c6a6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">অ্যান্টার্কটিকা</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">১৪.০ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">১,০০০-৫,০০০</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">০</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            পৃথিবীর দক্ষিণতম মহাদেশ এবং শীতলতম, শুষ্কতম এবং বায়ুমণ্ডলীয়ভাবে সবচেয়ে প্রাণহীন স্থান। এখানে স্থায়ী মানববসতি নেই, তবে বিভিন্ন দেশের গবেষণা কেন্দ্র রয়েছে।
+                        </div>
+                        <a href="web6.html" class="btn btn-explore">অ্যান্টার্কটিকা আবিষ্কার করুন</a>
+                    </div>
+                </div>
+
+                <!-- ওশেনিয়া -->
+                <div class="continent-card">
+                    <div class="continent-image" style="background-image: url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                        <div class="continent-name">ওশেনিয়া</div>
+                    </div>
+                    <div class="continent-info">
+                        <div class="continent-stats">
+                            <div class="stat">
+                                <div class="stat-value">৮.৫২ মিলিয়ন</div>
+                                <div class="stat-label">বর্গ কিমি</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">৪৫ মিলিয়ন</div>
+                                <div class="stat-label">জনসংখ্যা</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">১৪</div>
+                                <div class="stat-label">দেশ</div>
+                            </div>
+                        </div>
+                        <div class="continent-description">
+                            অস্ট্রেলিয়া মহাদেশ এবং প্রশান্ত মহাসাগরের হাজার হাজার দ্বীপ নিয়ে গঠিত। গ্রেট ব্যারিয়ার রিফ বিশ্বের বৃহত্তম প্রবাল প্রাচীর যা এখানে অবস্থিত। মাওরি এবং আদিবাসী অস্ট্রেলীয়দের সমৃদ্ধ সংস্কৃতি রয়েছে।
+                        </div>
+                        <a href="web7.html" class="btn btn-explore">ওশেনিয়া আবিষ্কার করুন</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- মহাদেশ লিংক সেকশন -->
+        <section class="continent-links-section">
+            <h2 class="section-title">দ্রুত অ্যাক্সেস</h2>
+            
+            <div class="continent-links">
+                <a href="web1.html" class="continent-link">
+                    <i class="fas fa-mountain"></i>
+                    <h3>এশিয়া</h3>
+                    <p>বৃহত্তম মহাদেশ</p>
+                </a>
+                
+                <a href="web2.html" class="continent-link">
+                    <i class="fas fa-sun"></i>
+                    <h3>আফ্রিকা</h3>
+                    <p>মানব সভ্যতার জন্মস্থান</p>
+                </a>
+                
+                <a href="web3.html" class="continent-link">
+                    <i class="fas fa-landmark"></i>
+                    <h3>ইউরোপ</h3>
+                    <p>ঐতিহাসিক মহাদেশ</p>
+                </a>
+                
+                <a href="web4.html" class="continent-link">
+                    <i class="fas fa-flag-usa"></i>
+                    <h3>উত্তর আমেরিকা</h3>
+                    <p>প্রাকৃতিক বিস্ময়</p>
+                </a>
+                
+                <a href="web5.html" class="continent-link">
+                    <i class="fas fa-tree"></i>
+                    <h3>দক্ষিণ আমেরিকা</h3>
+                    <p>আমাজনের দেশ</p>
+                </a>
+                
+                <a href="web6.html" class="continent-link">
+                    <i class="fas fa-snowflake"></i>
+                    <h3>অ্যান্টার্কটিকা</h3>
+                    <p>হিমমহাদেশ</p>
+                </a>
+                
+                <a href="web7.html" class="continent-link">
+                    <i class="fas fa-water"></i>
+                    <h3>ওশেনিয়া</h3>
+                    <p>দ্বীপপুঞ্জের মহাদেশ</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- বৈশিষ্ট্য -->
+        <section class="features" id="features">
+            <h2 class="section-title">আমাদের বৈশিষ্ট্যসমূহ</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>বিস্তারিত মানচিত্র</h3>
+                    <p>প্রতিটি মহাদেশের জন্য উচ্চ-রেজোলিউশনের ইন্টারেক্টিভ মানচিত্র যা দেশ, নগর এবং প্রাকৃতিক বৈশিষ্ট্য প্রদর্শন করে।</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>পরিসংখ্যান ও তথ্য</h3>
+                    <p>আপ-টু-ডেট পরিসংখ্যান, জনসংখ্যা তথ্য, অর্থনৈতিক ডেটা এবং পরিবেশগত তথ্য প্রতিটি মহাদেশের জন্য।</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>গ্যালারি</h3>
+                    <p>প্রতিটি মহাদেশের সেরা স্থান এবং প্রাকৃতিক সৌন্দর্যের উচ্চমানের ছবির সংগ্রহ।</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>ভিডিও ট্যুর</h3>
+                    <p>ভার্চুয়াল ট্যুর এবং ডকুমেন্টারি ভিডিও যা আপনাকে প্রতিটি মহাদেশের অভিজ্ঞতা দেবে।</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ফুটার -->
+    <footer id="about">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>মহাদেশ এক্সপ্লোরার</h3>
+                <p>বিশ্বের ৭টি মহাদেশ সম্পর্কে সম্পূর্ণ এবং আকর্ষণীয় তথ্য প্রদানের জন্য আমাদের প্ল্যাটফর্ম। থ্রি.জেএস ব্যবহার করে তৈরি বাস্তবসম্মত ঘূর্ণায়মান পৃথিবী মডেল।</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>দ্রুত লিংক</h3>
+                <ul class="footer-links">
+                    <li><a href="#home"><i class="fas fa-home"></i> হোম</a></li>
+                    <li><a href="#earth3d"><i class="fas fa-globe"></i> ৩ডি পৃথিবী</a></li>
+                    <li><a href="#continents"><i class="fas fa-map"></i> মহাদেশসমূহ</a></li>
+                    <li><a href="#features"><i class="fas fa-star"></i> বৈশিষ্ট্য</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>মহাদেশ লিংক</h3>
+                <ul class="footer-links">
+                    <li><a href="web1.html"><i class="fas fa-mountain"></i> এশিয়া</a></li>
+                    <li><a href="web2.html"><i class="fas fa-sun"></i> আফ্রিকা</a></li>
+                    <li><a href="web3.html"><i class="fas fa-landmark"></i> ইউরোপ</a></li>
+                    <li><a href="web4.html"><i class="fas fa-flag-usa"></i> উত্তর আমেরিকা</a></li>
+                    <li><a href="web5.html"><i class="fas fa-tree"></i> দক্ষিণ আমেরিকা</a></li>
+                    <li><a href="web6.html"><i class="fas fa-snowflake"></i> অ্যান্টার্কটিকা</a></li>
+                    <li><a href="web7.html"><i class="fas fa-water"></i> ওশেনিয়া</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>কন্ট্রোল</h3>
+                <ul class="footer-links">
+                    <li><a href="#" id="footerRotateBtn"><i class="fas fa-sync-alt"></i> ঘূর্ণন টগল করুন</a></li>
+                    <li><a href="#" id="footerResetBtn"><i class="fas fa-home"></i> রিসেট করুন</a></li>
+                    <li><a href="#" id="footerNightBtn"><i class="fas fa-moon"></i> রাত/দিন পরিবর্তন</a></li>
+                    <li><a href="#" id="footerAutoBtn"><i class="fas fa-robot"></i> অটো রোটেট</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; ২০২৩ মহাদেশ এক্সপ্লোরার | থ্রি.জেএস পূর্ণ ৩ডি পৃথিবী | সমস্ত মহাদেশের তথ্য</p>
+        </div>
+    </footer>
+
+    <script>
+        // স্টার ব্যাকগ্রাউন্ড তৈরি
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // থ্রি.জেএস দিয়ে পৃথিবী তৈরি
+        let scene, camera, renderer, earth, controls;
+        let isRotating = true;
+        let isNightMode = false;
+        let stars, clouds;
+        let animationId;
+
+        function initEarth() {
+            // Scene তৈরি
+            scene = new THREE.Scene();
+            
+            // Camera তৈরি
+            camera = new THREE.PerspectiveCamera(
+                75, 
+                document.getElementById('earth-container').offsetWidth / 
+                document.getElementById('earth-container').offsetHeight,
+                0.1, 
+                1000
+            );
+            camera.position.z = 3;
+            
+            // Renderer তৈরি
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: true,
+                powerPreference: "high-performance"
+            });
+            renderer.setSize(document.getElementById('earth-container').offsetWidth, 
+                           document.getElementById('earth-container').offsetHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.getElementById('earth-container').appendChild(renderer.domElement);
+            
+            // Orbit Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+            controls.minDistance = 1.5;
+            controls.maxDistance = 10;
+            controls.enablePan = false;
+            
+            // Ambient Light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            // Directional Light (সূর্য)
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+            
+            // পৃথিবীর টেক্সচার লোড
+            const textureLoader = new THREE.TextureLoader();
+            
+            // উচ্চ রেজোলিউশনের টেক্সচার
+            const earthTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg');
+            const bumpTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg');
+            const specularTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg');
+            const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png');
+            
+            // পৃথিবীর ম্যাটেরিয়াল
+            const earthMaterial = new THREE.MeshPhongMaterial({
+                map: earthTexture,
+                bumpMap: bumpTexture,
+                bumpScale: 0.05,
+                specularMap: specularTexture,
+                specular: new THREE.Color(0x333333),
+                shininess: 5
+            });
+            
+            // পৃথিবীর জিওমেট্রি
+            const earthGeometry = new THREE.SphereGeometry(1, 64, 64);
+            earth = new THREE.Mesh(earthGeometry, earthMaterial);
+            scene.add(earth);
+            
+            // মেঘের লেয়ার
+            const cloudMaterial = new THREE.MeshPhongMaterial({
+                map: cloudTexture,
+                transparent: true,
+                opacity: 0.4
+            });
+            
+            const cloudGeometry = new THREE.SphereGeometry(1.01, 64, 64);
+            clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+            scene.add(clouds);
+            
+            // তারার ব্যাকগ্রাউন্ড
+            const starGeometry = new THREE.SphereGeometry(100, 32, 32);
+            const starMaterial = new THREE.MeshBasicMaterial({
+                map: textureLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/cube/skybox/starfield.png'),
+                side: THREE.BackSide
+            });
+            const starField = new THREE.Mesh(starGeometry, starMaterial);
+            scene.add(starField);
+            
+            // লোডিং স্ক্রিন লুকান
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 1000);
+            }, 1500);
+            
+            // Animation লুপ
+            function animate() {
+                animationId = requestAnimationFrame(animate);
+                
+                if (isRotating) {
+                    earth.rotation.y += 0.002;
+                    clouds.rotation.y += 0.0025;
+                }
+                
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // রিসাইজ হ্যান্ডলার
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('earth-container');
+            camera.aspect = container.offsetWidth / container.offsetHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+        }
+        
+        // কন্ট্রোল বাটন ইভেন্ট
+        document.getElementById('rotateBtn').addEventListener('click', function() {
+            isRotating = !isRotating;
+            this.classList.toggle('active');
+            this.title = isRotating ? 'ঘূর্ণন বন্ধ করুন' : 'ঘূর্ণন সক্রিয় করুন';
+        });
+        
+        document.getElementById('zoomInBtn').addEventListener('click', function() {
+            camera.position.z = Math.max(camera.position.z * 0.9, 1.5);
+        });
+        
+        document.getElementById('zoomOutBtn').addEventListener('click', function() {
+            camera.position.z = Math.min(camera.position.z * 1.1, 10);
+        });
+        
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            camera.position.set(0, 0, 3);
+            controls.reset();
+        });
+        
+        document.getElementById('nightBtn').addEventListener('click', function() {
+            isNightMode = !isNightMode;
+            this.classList.toggle('active');
+            
+            if (scene) {
+                if (isNightMode) {
+                    scene.background = new THREE.Color(0x000011);
+                    document.querySelector('.globe-section').style.boxShadow = '0 0 100px rgba(0, 10, 30, 0.8)';
+                } else {
+                    scene.background = null;
+                    document.querySelector('.globe-section').style.boxShadow = '0 0 100px rgba(0, 172, 193, 0.4)';
+                }
+            }
+        });
+        
+        // মহাদেশ ট্যাগ ক্লিক ইভেন্ট
+        document.querySelectorAll('.continent-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                const continent = this.getAttribute('data-continent');
+                
+                // সকল ট্যাগ থেকে active ক্লাস সরান
+                document.querySelectorAll('.continent-tag').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // বর্তমান ট্যাগে active ক্লাস যোগ করুন
+                this.classList.add('active');
+                
+                // পৃথিবীকে নির্দিষ্ট অবস্থানে ঘুরান
+                if (earth && camera) {
+                    switch(continent) {
+                        case 'asia':
+                            earth.rotation.y = 2.5;
+                            camera.position.set(2, 1, 3);
+                            break;
+                        case 'africa':
+                            earth.rotation.y = 0.5;
+                            camera.position.set(1.5, 0.5, 2.5);
+                            break;
+                        case 'europe':
+                            earth.rotation.y = 0.2;
+                            camera.position.set(1.8, 0.8, 2.2);
+                            break;
+                        case 'north-america':
+                            earth.rotation.y = 3.5;
+                            camera.position.set(2, 1.2, 2.8);
+                            break;
+                        case 'south-america':
+                            earth.rotation.y = 4.0;
+                            camera.position.set(1.7, 0.3, 2.5);
+                            break;
+                        case 'antarctica':
+                            earth.rotation.y = 1.5;
+                            camera.position.set(0, -2, 3);
+                            break;
+                        case 'oceania':
+                            earth.rotation.y = 5.0;
+                            camera.position.set(2.2, 0.5, 2.5);
+                            break;
+                    }
+                }
+            });
+        });
+        
+        // ফুটার কন্ট্রোল লিংক
+        document.getElementById('footerRotateBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('rotateBtn').click();
+        });
+        
+        document.getElementById('footerResetBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('resetBtn').click();
+        });
+        
+        document.getElementById('footerNightBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('nightBtn').click();
+        });
+        
+        document.getElementById('footerAutoBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            isRotating = true;
+            document.getElementById('rotateBtn').classList.add('active');
+        });
+        
+        // কার্ড হোভার ইফেক্ট
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.continent-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-15px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // কাউন্টার অ্যানিমেশন
+            const counters = document.querySelectorAll('.counter-number');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target') || 0;
+                    const count = +counter.innerText.replace(' বিলিয়ন', '').replace(' মিলিয়ন', '');
+                    
+                    if (counter.innerText.includes('বিলিয়ন')) {
+                        // বিলিয়ন কাউন্টার
+                        counter.innerText = "৭.৯ বিলিয়ন";
+                    } else if (counter.innerText.includes('মিলিয়ন')) {
+                        // মিলিয়ন কাউন্টার
+                    } else {
+                        // সাধারণ কাউন্টার
+                        const inc = target / speed;
+                        
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    }
+                };
+                
+                // Set data-target attribute for animation
+                if (counter.innerText === '৭') {
+                    counter.setAttribute('data-target', '7');
+                } else if (counter.innerText === '১৯৫') {
+                    counter.setAttribute('data-target', '195');
+                }
+                
+                updateCount();
+            });
+            
+            // নেভিগেশন লিংক স্মুথ স্ক্রল
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        
+        // পেজ লোড হলে সব শুরু করুন
+        window.addEventListener('load', function() {
+            createStars();
+            initEarth();
+            
+            // ৩ডি ভিউপোর্টের জন্য কন্টেইনার সাইজ ঠিক করুন
+            const container = document.getElementById('earth-container');
+            const updateSize = () => {
+                const parent = container.parentElement;
+                const width = parent.clientWidth;
+                const height = parent.clientHeight;
+                container.style.width = width + 'px';
+                container.style.height = height + 'px';
+                
+                if (camera && renderer) {
+                    camera.aspect = width / height;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(width, height);
+                }
+            };
+            
+            updateSize();
+            window.addEventListener('resize', updateSize);
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        });
+    </script>
+</body>
+</html>
